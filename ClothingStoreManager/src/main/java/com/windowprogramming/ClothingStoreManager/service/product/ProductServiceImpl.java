@@ -185,6 +185,12 @@ public class ProductServiceImpl implements ProductService {
         return productResponse;
     }
 
+    @Override
+    public List<ProductResponse> searchByName(String name) {
+        List<Product> products = productRepository.findByNameContaining(name);
+        return buildProductResponses(products);
+    }
+
     private List<ProductResponse> buildProductResponses(List<Product> products) {
         List<ProductResponse> productResponses = new ArrayList<>();
         for(Product product : products) {

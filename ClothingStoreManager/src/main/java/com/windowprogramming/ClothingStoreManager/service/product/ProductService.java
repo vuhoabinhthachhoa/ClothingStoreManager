@@ -22,7 +22,7 @@ public interface ProductService {
     void setBusinessStatusToInactive(List<Long> productIds);
     void setDiscountPercent(String productCode, BigDecimal discountPercent);
     void setDiscountPercent(List<String> productCodes, BigDecimal discountPercent);
-
     ProductResponse buildProductResponse(Product product);
+    List<ProductResponse> searchByName(String name);
 
 }

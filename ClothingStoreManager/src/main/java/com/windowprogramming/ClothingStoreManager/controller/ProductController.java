@@ -35,7 +35,6 @@ import java.util.List;
 public class ProductController {
 
     ProductService productService;
-
     @NonFinal
     @Value("${app.controller.product.response.stop-business.success}")
     String STOP_BUSINESS_SUCCESS;
@@ -76,6 +75,14 @@ public class ProductController {
                                                                      @RequestParam @NotNull SortType sortType) {
         return ApiResponse.<PageResponse<ProductResponse>>builder()
                 .data(productService.searchProducts(productSearchRequest, page, size, sortField, sortType))
+                .build();
+    }
+
+    @GetMapping("/searchByName")
+    @Operation(summary = "Search products by name", description = "Search for products by name")
+    public ApiResponse<List<ProductResponse>> searchByName(@RequestParam @NotNull String name) {
+        return ApiResponse.<List<ProductResponse>>builder()
+                .data(productService.searchByName(name))
                 .build();
     }
 

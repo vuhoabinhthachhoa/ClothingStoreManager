@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
         put("employeeId", "REQUIRED_EMPLOYEE_ID");
         put("branchName", "REQUIRED_BRANCH_NAME");
         put("categoryId", "REQUIRED_CATEGORY_ID");
+        put("name", "REQUIRED_PRODUCT_NAME");
     }};
 
     @ExceptionHandler(Exception.class)
