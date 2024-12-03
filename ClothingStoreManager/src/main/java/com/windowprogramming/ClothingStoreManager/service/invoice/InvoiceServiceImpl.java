@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         BigDecimal totalAmount = BigDecimal.ZERO;
         BigDecimal realAmount = BigDecimal.ZERO;
         List<InvoiceDetail> invoiceDetails = new ArrayList<>();
+        Map<Product, Short> products = new HashMap<>();
+
         for (Map.Entry<Long, Short> entry : invoiceCreationRequest.getProductQuantity().entrySet()) {
             Long productId = entry.getKey();
             Short quantity = entry.getValue();
@@ -66,6 +69,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             if(product.getInventoryQuantity() < quantity) {
                 throw new AppException(ErrorCode.PRODUCT_OUT_OF_STOCK);
             }
+            products.put(product, quantity);
 
             InvoiceDetail invoiceDetail = InvoiceDetail.builder()
                     .invoice(invoice)
@@ -86,6 +90,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         invoice = invoiceRepository.save(invoice);
         invoiceDetailRepository.saveAll(invoiceDetails);
+
+        // subtract quantity from inventory
+        for (Map.Entry<Product, Short> entry : products.entrySet()) {
+            Product product = entry.getKey();
+            Short quantity = entry.getValue();
+            Short inventoryQuantity = product.getInventoryQuantity();
+            product.setInventoryQuantity((short) (inventoryQuantity - quantity));
+            productRepository.save(product);
+        }
+
         return buildInvoiceGeneralResponse(invoice);
 
     }
