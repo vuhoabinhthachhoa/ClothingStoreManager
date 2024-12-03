@@ -20,6 +20,7 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegistrationRequest {
     @Size(min = 5, message = "INVALID_USERNAME")
+    @NotNull(message = "INVALID_USERNAME")
     String username;
 
     @Size(min = 8, message = "INVALID_PASSWORD")
