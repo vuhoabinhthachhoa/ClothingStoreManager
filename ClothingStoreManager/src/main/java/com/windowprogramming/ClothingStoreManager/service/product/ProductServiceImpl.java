@@ -187,7 +187,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> searchByName(String name) {
-        List<Product> products = productRepository.findByNameContaining(name);
+        List<Product> products = productRepository.findByNameContainingAndInventoryQuantityGreaterThan(name, 0);
         return buildProductResponses(products);
     }
 

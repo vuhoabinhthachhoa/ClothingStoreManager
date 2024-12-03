@@ -33,5 +33,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomP
 
     List<Product> findAllByCode(String productCode);
 
-    List<Product> findByNameContaining(String name);
+    List<Product> findByNameContainingAndInventoryQuantityGreaterThan(String name, int quantity);
 }
