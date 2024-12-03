@@ -113,16 +113,18 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         // print the query with real parameter for testing
         System.out.println("Query: " + query.unwrap(org.hibernate.query.Query.class).getQueryString());
 
+        List<Product> productsWithoutPagination = query.getResultList();
+
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
 
         List<Product> products = query.getResultList();
 
-        TypedQuery<Long> countQuery = entityManager.createQuery(
-                "SELECT COUNT(p) FROM products p WHERE 1=1", Long.class);
-        Long count = countQuery.getSingleResult();
+//        TypedQuery<Long> countQuery = entityManager.createQuery(
+//                "SELECT COUNT(p) FROM products p WHERE 1=1", Long.class);
+//        Long count = countQuery.getSingleResult();
 
-        return new PageImpl<>(products, pageable, count);
+        return new PageImpl<>(products, pageable, productsWithoutPagination.size());
 
     }
 

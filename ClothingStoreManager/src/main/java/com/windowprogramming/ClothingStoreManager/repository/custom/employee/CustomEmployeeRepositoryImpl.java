@@ -82,15 +82,17 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
         // print the query with real parameter for testing
         System.out.println("Query: " + query.unwrap(org.hibernate.query.Query.class).getQueryString());
 
+        List<Employee> employeesWithoutPagination = query.getResultList();
+
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
 
         List<Employee> employees = query.getResultList();
 
-        TypedQuery<Long> countQuery = entityManager.createQuery(
-                "SELECT COUNT(p) FROM employees p WHERE 1=1", Long.class);
-        Long count = countQuery.getSingleResult();
+//        TypedQuery<Long> countQuery = entityManager.createQuery(
+//                "SELECT COUNT(p) FROM employees p WHERE 1=1", Long.class);
+//        Long count = countQuery.getSingleResult();
 
-        return new PageImpl<>(employees, pageable, count);
+        return new PageImpl<>(employees, pageable, employeesWithoutPagination.size());
     }
 }
