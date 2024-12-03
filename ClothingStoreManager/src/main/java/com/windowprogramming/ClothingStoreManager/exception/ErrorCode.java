@@ -48,8 +48,8 @@ public enum ErrorCode {
     REQUIRED_USERNAME(2029, HttpStatus.BAD_REQUEST, "Username is required"),
     REQUIRED_PASSWORD(2030, HttpStatus.BAD_REQUEST, "Password is required"),
     REQUIRED_ROLE_NAME(2031, HttpStatus.BAD_REQUEST, "Role name is required"),
-    INVALID_USERNAME(2032, HttpStatus.BAD_REQUEST, "Username should be at least {} characters"),
-    INVALID_PASSWORD(2033, HttpStatus.BAD_REQUEST, "Password should be at least {} characters, " +
+    INVALID_USERNAME(2032, HttpStatus.BAD_REQUEST, "Username should be at least 5 characters"),
+    INVALID_PASSWORD(2033, HttpStatus.BAD_REQUEST, "Password should be at least 8 characters, " +
             "contain at least one uppercase letter, one lowercase letter, one number, and one special character"),
     SAME_PASSWORD(2034, HttpStatus.BAD_REQUEST, "New password must be different from the old password"),
     REQUIRED_NEW_PASSWORD(2035, HttpStatus.BAD_REQUEST, "New password is required"),
