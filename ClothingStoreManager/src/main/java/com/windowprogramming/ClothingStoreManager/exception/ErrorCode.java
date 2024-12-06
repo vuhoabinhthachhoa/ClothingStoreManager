@@ -65,7 +65,7 @@ public enum ErrorCode {
     VALID_DISCOUNT_PERCENT(2045, HttpStatus.BAD_REQUEST, "Discount percent must be at least 0.00 and at most 1.00"),
     REQUIRED_BRANCH_NEW_NAME(2046, HttpStatus.BAD_REQUEST, "New branch name is required"),
     TOTAL_AMOUNT_OR_REAL_AMOUNT_NOT_MATCH(2047, HttpStatus.BAD_REQUEST, "Total amount or real amount not match"),
-    PRODUCT_OUT_OF_STOCK(2048, HttpStatus.BAD_REQUEST, "Product out of stock"),
+    PRODUCT_OUT_OF_STOCK(2048, HttpStatus.BAD_REQUEST, "Product does not have enough quantity"),
     EMPLOYEE_ALREADY_HAS_USER(2049, HttpStatus.BAD_REQUEST, "Employee already has user"),
     REQUIRED_PRODUCT_QUANTITY(2050, HttpStatus.BAD_REQUEST, "Product quantity is required"),
     CANNOT_DELETE_ROOT_ADMIN(2051, HttpStatus.BAD_REQUEST, "Cannot delete root admin"),

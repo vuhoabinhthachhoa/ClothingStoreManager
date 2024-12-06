@@ -12,7 +12,7 @@ public interface AuthenticationService {
     void logout(LogoutRequest logoutRequest);
     void changePassword(ChangePasswordRequest changePasswordRequest);
     void deleteUser(Long id);
-    UserResponse getUserById(Long id);
+    UserResponse getCurrentUser();
     UserResponse updateUser(UserUpdateRequest userUpdateRequest);
     List<UserResponse> getAllUsers();
 }

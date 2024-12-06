@@ -65,9 +65,9 @@ public class AuthenticationController {
     @GetMapping()
     @Operation(summary = "Get information of my account",
             description = "Get information of my account")
-    public ApiResponse<UserResponse> getUser(@RequestParam("id") Long id) {
+    public ApiResponse<UserResponse> getCurrentUser() {
         return ApiResponse.<UserResponse>builder()
-                .data(authenticationService.getUserById(id))
+                .data(authenticationService.getCurrentUser())
                 .build();
     }
 

@@ -138,8 +138,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserResponse getUserById(Long id) {
-        User user = userRepository.findById(id)
+    public UserResponse getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currUser = (User) authentication.getPrincipal();
+        Long userId = currUser.getId();
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         return buildUserResponse(user);
