@@ -15,8 +15,9 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest {
-    @NotNull(message = "REQUIRED_USER_ID")
-    Long id;
+//    @NotNull(message = "REQUIRED_USER_ID")
+//    Long id;
+
     String phoneNumber;
 
     String email;

@@ -150,7 +150,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserResponse updateUser(UserUpdateRequest userUpdateRequest) {
-        User user = userRepository.findById(userUpdateRequest.getId())
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currUser = (User) authentication.getPrincipal();
+        Long userId = currUser.getId();
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userMapper.updateUser(user, userUpdateRequest);
 
