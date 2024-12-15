@@ -19,4 +19,6 @@ public interface EmployeeService {
     EmployeeResponse updateEmployee(EmployeeUpdateRequest employeeUpdateRequest);
     void setEmploymentStatusToUnemployed(Long id);
     void setEmploymentStatusesToUnemployed(List<Long> ids);
+    List<EmployeeResponse> getEmployeesByTotalInvoicesDesc();
+
 }

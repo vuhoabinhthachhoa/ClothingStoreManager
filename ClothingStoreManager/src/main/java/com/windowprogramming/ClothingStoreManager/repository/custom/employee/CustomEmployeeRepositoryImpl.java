@@ -2,6 +2,7 @@ package com.windowprogramming.ClothingStoreManager.repository.custom.employee;
 
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductSearchRequest;
+import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeResponse;
 import com.windowprogramming.ClothingStoreManager.entity.Employee;
 import com.windowprogramming.ClothingStoreManager.entity.Product;
 import com.windowprogramming.ClothingStoreManager.utils.IsExistingParamUtils;
@@ -33,7 +34,7 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
 
         if (IsExistingParamUtils.isExistingParam(request.getId())) {
             jpql.append(" AND e.id = :id");
-            parameters.put("id",   request.getId());
+            parameters.put("id", request.getId());
         }
 
         if (IsExistingParamUtils.isExistingParam(request.getName())) {
@@ -94,5 +95,15 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
 //        Long count = countQuery.getSingleResult();
 
         return new PageImpl<>(employees, pageable, employeesWithoutPagination.size());
+    }
+
+    @Override
+    public List<Employee> getEmployeesByTotalInvoicesDesc() {
+        String jpql = "SELECT e FROM employees e LEFT JOIN invoices i ON e.id = i.employee.id " +
+                "GROUP BY e.id, e.name, e.phoneNumber, e.jobTitle, e.salary, e.employmentStatus " +
+                "ORDER BY COUNT(i.id) DESC";
+
+        TypedQuery<Employee> query = entityManager.createQuery(jpql, Employee.class);
+        return query.getResultList();
     }
 }

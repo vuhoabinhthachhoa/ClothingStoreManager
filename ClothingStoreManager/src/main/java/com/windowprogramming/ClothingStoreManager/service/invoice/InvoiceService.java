@@ -3,6 +3,7 @@ package com.windowprogramming.ClothingStoreManager.service.invoice;
 import com.windowprogramming.ClothingStoreManager.dto.request.invoice.InvoiceCreationRequest;
 import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.invoice.InvoiceAggregationResponse;
+import com.windowprogramming.ClothingStoreManager.dto.response.invoice.InvoiceDetailResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.invoice.InvoiceGeneralResponse;
 
 import java.time.LocalDate;

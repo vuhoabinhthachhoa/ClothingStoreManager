@@ -118,6 +118,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public List<EmployeeResponse> getEmployeesByTotalInvoicesDesc() {
+        List<Employee> employees = employeeRepository.getEmployeesByTotalInvoicesDesc();
+        return buildEmployeeResponses(employees);
+    }
+
     private List<EmployeeResponse> buildEmployeeResponses(List<Employee> employees) {
         List<EmployeeResponse> employeeResponses = new ArrayList<>();
         for(Employee employee : employees) {

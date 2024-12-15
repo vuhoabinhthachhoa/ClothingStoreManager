@@ -66,7 +66,7 @@ public class InvoiceController {
     }
 
     @Operation(summary = "Get invoices with pagination", description = "Retrieve invoices within a date range with pagination and sorting")
-    @GetMapping
+    @GetMapping("/pagination")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ApiResponse<PageResponse<InvoiceGeneralResponse>> getInvoicesInPeriodWithPagination(
             @RequestParam(required = false) LocalDate startDate,
@@ -75,6 +75,17 @@ public class InvoiceController {
             @RequestParam @NotNull Integer size) {
         return ApiResponse.<PageResponse<InvoiceGeneralResponse>>builder()
                 .data(invoiceService.getInvoicesInPeriodWithPagination(startDate, endDate, page, size))
+                .build();
+    }
+
+    @Operation(summary = "Get all invoices", description = "Retrieve all invoices within a date range")
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ApiResponse<List<InvoiceGeneralResponse>> getInvoicesInPeriod(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate) {
+        return ApiResponse.<List<InvoiceGeneralResponse>>builder()
+                .data(invoiceService.getInvoicesInPeriod(startDate, endDate))
                 .build();
     }
 

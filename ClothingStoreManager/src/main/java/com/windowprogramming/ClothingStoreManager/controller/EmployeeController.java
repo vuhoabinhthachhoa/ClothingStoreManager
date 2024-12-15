@@ -116,4 +116,13 @@ public class EmployeeController {
                 .build();
     }
 
+    @GetMapping("/total-invoices")
+    @Operation(summary = "Get employees by total invoices",
+            description = "Get employees by total invoices")
+    public ApiResponse<List<EmployeeResponse>> getEmployeesByTotalInvoicesDesc() {
+        return ApiResponse.<List<EmployeeResponse>>builder()
+                .data(employeeService.getEmployeesByTotalInvoicesDesc())
+                .build();
+    }
+
 }
