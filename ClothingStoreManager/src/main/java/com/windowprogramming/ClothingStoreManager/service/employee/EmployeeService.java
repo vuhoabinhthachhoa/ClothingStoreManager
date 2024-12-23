@@ -4,11 +4,13 @@ import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeC
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductSearchRequest;
+import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeInvoiceCountResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
 import com.windowprogramming.ClothingStoreManager.enums.SortType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface EmployeeService {
@@ -19,6 +21,6 @@ public interface EmployeeService {
     EmployeeResponse updateEmployee(EmployeeUpdateRequest employeeUpdateRequest);
     void setEmploymentStatusToUnemployed(Long id);
     void setEmploymentStatusesToUnemployed(List<Long> ids);
-    List<EmployeeResponse> getEmployeesByTotalInvoicesDesc();
+    List<EmployeeInvoiceCountResponse> getEmployeesByTotalInvoicesDesc(LocalDate startDate, LocalDate endDate);
 
 }

@@ -8,9 +8,10 @@ import com.windowprogramming.ClothingStoreManager.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CustomEmployeeRepository {
     Page<Employee> searchEmployees(EmployeeSearchRequest request, Pageable pageable);
-    List<Employee> getEmployeesByTotalInvoicesDesc();
+    List<Object[]> getEmployeesByTotalInvoicesDesc(LocalDate startDate, LocalDate endDate);
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,13 +98,28 @@ public class CustomEmployeeRepositoryImpl implements CustomEmployeeRepository {
         return new PageImpl<>(employees, pageable, employeesWithoutPagination.size());
     }
 
-    @Override
-    public List<Employee> getEmployeesByTotalInvoicesDesc() {
-        String jpql = "SELECT e FROM employees e LEFT JOIN invoices i ON e.id = i.employee.id " +
-                "GROUP BY e.id, e.name, e.phoneNumber, e.jobTitle, e.salary, e.employmentStatus " +
-                "ORDER BY COUNT(i.id) DESC";
+@Override
+public List<Object[]> getEmployeesByTotalInvoicesDesc(LocalDate startDate, LocalDate endDate) {
+    StringBuilder jpql = new StringBuilder("SELECT e, COUNT(i.id) FROM employees e LEFT JOIN invoices i ON e.id = i.employee.id WHERE 1=1");
 
-        TypedQuery<Employee> query = entityManager.createQuery(jpql, Employee.class);
-        return query.getResultList();
+    if (startDate != null) {
+        jpql.append(" AND i.createdDate >= :startDate");
     }
+    if (endDate != null) {
+        jpql.append(" AND i.createdDate <= :endDate");
+    }
+
+    jpql.append(" GROUP BY e.id, e.name, e.phoneNumber, e.jobTitle, e.salary, e.employmentStatus ORDER BY COUNT(i.id) DESC");
+
+    TypedQuery<Object[]> query = entityManager.createQuery(jpql.toString(), Object[].class);
+
+    if (startDate != null) {
+        query.setParameter("startDate", startDate);
+    }
+    if (endDate != null) {
+        query.setParameter("endDate", endDate);
+    }
+
+    return query.getResultList();
+}
 }

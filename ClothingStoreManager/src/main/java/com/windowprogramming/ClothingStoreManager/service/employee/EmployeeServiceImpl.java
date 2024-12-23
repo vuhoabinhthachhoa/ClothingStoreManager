@@ -3,6 +3,7 @@ package com.windowprogramming.ClothingStoreManager.service.employee;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeCreationRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeUpdateRequest;
+import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeInvoiceCountResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
 import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,9 +121,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeResponse> getEmployeesByTotalInvoicesDesc() {
-        List<Employee> employees = employeeRepository.getEmployeesByTotalInvoicesDesc();
-        return buildEmployeeResponses(employees);
+    public List<EmployeeInvoiceCountResponse> getEmployeesByTotalInvoicesDesc(LocalDate startDate, LocalDate endDate) {
+        List<Object[]> results = employeeRepository.getEmployeesByTotalInvoicesDesc(startDate, endDate);
+        List<EmployeeInvoiceCountResponse> employeeResponses = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Employee employee = (Employee) result[0];
+            Long invoiceCount = (Long) result[1];
+            EmployeeResponse employeeResponse = employeeMapper.toEmployeeResponse(employee);
+            EmployeeInvoiceCountResponse response = EmployeeInvoiceCountResponse.builder()
+                    .employeeResponse(employeeResponse)
+                    .invoiceCount(invoiceCount)
+                    .build();
+            employeeResponses.add(response);
+        }
+
+        return employeeResponses;
     }
 
     private List<EmployeeResponse> buildEmployeeResponses(List<Employee> employees) {

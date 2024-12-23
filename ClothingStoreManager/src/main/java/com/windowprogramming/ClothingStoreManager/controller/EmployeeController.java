@@ -4,10 +4,7 @@ import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeC
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeSearchRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.employee.EmployeeUpdateRequest;
 import com.windowprogramming.ClothingStoreManager.dto.request.product.ProductSearchRequest;
-import com.windowprogramming.ClothingStoreManager.dto.response.ApiResponse;
-import com.windowprogramming.ClothingStoreManager.dto.response.EmployeeResponse;
-import com.windowprogramming.ClothingStoreManager.dto.response.PageResponse;
-import com.windowprogramming.ClothingStoreManager.dto.response.ProductResponse;
+import com.windowprogramming.ClothingStoreManager.dto.response.*;
 import com.windowprogramming.ClothingStoreManager.enums.SortType;
 import com.windowprogramming.ClothingStoreManager.service.employee.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @EnableMethodSecurity
@@ -55,10 +53,10 @@ public class EmployeeController {
     @Operation(summary = "Search employees", description = "Search for employees with pagination and sorting")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ApiResponse<PageResponse<EmployeeResponse>> searchEmployees(@Valid @RequestBody EmployeeSearchRequest employeeSearchRequest,
-                                                                     @RequestParam @NotNull Integer page,
-                                                                     @RequestParam @NotNull Integer size,
-                                                                     @RequestParam @NotNull String sortField,
-                                                                     @RequestParam @NotNull SortType sortType) {
+                                                                       @RequestParam @NotNull Integer page,
+                                                                       @RequestParam @NotNull Integer size,
+                                                                       @RequestParam @NotNull String sortField,
+                                                                       @RequestParam @NotNull SortType sortType) {
         return ApiResponse.<PageResponse<EmployeeResponse>>builder()
                 .data(employeeService.searchEmployees(employeeSearchRequest, page, size, sortField, sortType))
                 .build();
@@ -119,9 +117,10 @@ public class EmployeeController {
     @GetMapping("/total-invoices")
     @Operation(summary = "Get employees by total invoices",
             description = "Get employees by total invoices")
-    public ApiResponse<List<EmployeeResponse>> getEmployeesByTotalInvoicesDesc() {
-        return ApiResponse.<List<EmployeeResponse>>builder()
-                .data(employeeService.getEmployeesByTotalInvoicesDesc())
+    public ApiResponse<List<EmployeeInvoiceCountResponse>> getEmployeesByTotalInvoicesDesc(@RequestParam(required = false) LocalDate startDate,
+                                                                                           @RequestParam(required = false) LocalDate endDate) {
+        return ApiResponse.<List<EmployeeInvoiceCountResponse>>builder()
+                .data(employeeService.getEmployeesByTotalInvoicesDesc(startDate, endDate))
                 .build();
     }
 
