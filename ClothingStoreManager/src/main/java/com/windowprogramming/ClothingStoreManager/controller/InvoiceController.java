@@ -102,7 +102,6 @@ public class InvoiceController {
 
     @Operation(summary = "Get invoice aggregation", description = "Retrieve aggregated invoice data within a date range")
     @GetMapping("/aggregation")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ApiResponse<InvoiceAggregationResponse> getInvoiceAggregation(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
