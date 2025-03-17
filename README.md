@@ -10,7 +10,6 @@ A Spring Boot application that provides comprehensive management solutions for c
 - Employee scheduling and performance tracking
 - Reporting and analytics dashboard for sales trends
 - Discount and promotion management system
-- Barcode integration for quick product lookups
 - Secure user authentication and role-based access control
 
 ## Technologies
@@ -19,7 +18,7 @@ A Spring Boot application that provides comprehensive management solutions for c
 - Spring Data JPA
 - Spring Security
 - Maven
-- MySQL/PostgreSQL database
+- MySQL database
 - Hibernate ORM
 - Lombok
 
