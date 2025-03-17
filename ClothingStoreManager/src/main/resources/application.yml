@@ -3,9 +3,9 @@ spring:
     name: ClothingStoreManager
 
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:clothingstoremanager}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:Lecaotuanvu.2004_mysql}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORDl}
     driverClassName: com.mysql.cj.jdbc.Driver
     #if I use driver-class-name: the ApplicationInitConfig will not be invoked
 
@@ -25,8 +25,8 @@ server:
 
 app:
   init-admin-account:
-    username: ${INIT_ADMIN_ACCOUNT_USERNAME:admin}
-    password: ${INIT_ADMIN_ACCOUNT_PASSWORD:Lecaotuanvu@2004}
+    username: ${INIT_ADMIN_ACCOUNT_USERNAME}
+    password: ${INIT_ADMIN_ACCOUNT_PASSWORD}
   role:
     admin:
       description: "Admin has all permissions"
@@ -72,6 +72,6 @@ app:
         delete:
           success: "Invoice has been deleted"
   cloudinary:
-    cloud_name: ${CLOUDINARY_CLOUD_NAME:dhqpfli0x}
-    api_key: ${CLOUDINARY_API_KEY:151148799177368}
-    api_secret: ${CLOUDINARY_API_SECRET:c3z9twEVWMyYFCfGL81EabLJlGo}
+    cloud_name: ${CLOUDINARY_CLOUD_NAME}
+    api_key: ${CLOUDINARY_API_KEY}
+    api_secret: ${CLOUDINARY_API_SECRET}
